@@ -3,6 +3,8 @@ from fcfs import fcfs
 import plotly.graph_objects as go
 from sjf_non_preemptive import sjf_non_preemptive
 from sjf_preemptive import sjf_preemptive
+from round_robin import round_robin
+from priority import priority_scheduling
 
 st.title("CPU Scheduling Simulator")
 
@@ -48,6 +50,12 @@ if st.button("Run Scheduling"):
 
     elif algorithm == "SJF Preemptive":
         gantt, avg_wt, avg_tat = sjf_preemptive(processes)
+
+    elif algorithm == "Round Robin":
+        gantt, avg_wt, avg_tat = round_robin(processes, time_quantum)
+
+    elif algorithm == "Priority":
+        gantt, avg_wt, avg_tat = priority_scheduling(processes)
 
     st.subheader("Gantt Chart Data")
     st.write(gantt)

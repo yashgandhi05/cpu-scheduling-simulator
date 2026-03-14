@@ -1,5 +1,8 @@
 import streamlit as st
 from fcfs import fcfs
+import plotly.graph_objects as go
+from sjf_non_preemptive import sjf_non_preemptive
+from sjf_preemptive import sjf_preemptive
 
 st.title("CPU Scheduling Simulator")
 
@@ -25,7 +28,7 @@ for i in range(num_process):
 
 algorithm = st.selectbox(
     "Select Scheduling Algorithm",
-    ["FCFS", "SJF", "Round Robin", "Priority"] 
+    ["FCFS", "SJF Non Preemptive", "SJF Preemptive", "Round Robin", "Priority"] 
 )
 
 time_quantum = None
@@ -40,9 +43,42 @@ if st.button("Run Scheduling"):
     if algorithm == "FCFS":
         gantt, avg_wt, avg_tat = fcfs(processes)
 
-        st.subheader("Gantt Chart Data")
-        st.write(gantt)
+    elif algorithm == "SJF Non Preemptive":
+        gantt, avg_wt, avg_tat = sjf_non_preemptive(processes)
 
-        st.subheader("Performance")
-        st.write("Average Waiting Time:", avg_wt)
-        st.write("Average Turnaround Time:", avg_tat)
+    elif algorithm == "SJF Preemptive":
+        gantt, avg_wt, avg_tat = sjf_preemptive(processes)
+
+    st.subheader("Gantt Chart Data")
+    st.write(gantt)
+
+    st.subheader("Performance")
+    st.write(f"Average Waiting Time : {avg_wt:.2f}")
+    st.write(f"Average Turnaround Time : {avg_tat:.2f}")
+
+    fig = go.Figure()
+
+    for p in gantt:
+        process = p[0]
+        start = p[1]
+        finish = p[2]
+        duration = finish - start
+
+        fig.add_bar(
+            x=[duration],
+            y=[process],
+            base=start,
+            orientation="h",
+            name=process
+        )
+
+    fig.update_layout(
+        title="CPU Scheduling Gantt Chart",
+        xaxis_title="Time",
+        yaxis_title="Process",
+        barmode="stack"
+    )
+
+    st.plotly_chart(fig)
+
+       

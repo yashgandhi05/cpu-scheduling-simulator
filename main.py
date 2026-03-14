@@ -36,3 +36,13 @@ if algorithm == "Round Robin":
 if st.button("Run Scheduling"):
     st.write("Processes:", processes)
     st.write("Selected Algorithm:", algorithm)
+
+    if algorithm == "FCFS":
+        gantt, avg_wt, avg_tat = fcfs(processes)
+
+        st.subheader("Gantt Chart Data")
+        st.write(gantt)
+
+        st.subheader("Performance")
+        st.write("Average Waiting Time:", avg_wt)
+        st.write("Average Turnaround Time:", avg_tat)

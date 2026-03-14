@@ -5,6 +5,7 @@ from sjf_non_preemptive import sjf_non_preemptive
 from sjf_preemptive import sjf_preemptive
 from round_robin import round_robin
 from priority import priority_scheduling
+import pandas as pd
 
 st.title("CPU Scheduling Simulator")
 
@@ -63,6 +64,18 @@ if st.button("Run Scheduling"):
     st.subheader("Performance")
     st.write(f"Average Waiting Time : {avg_wt:.2f}")
     st.write(f"Average Turnaround Time : {avg_tat:.2f}")
+
+    st.subheader("Algorithm Comparison:")
+
+    data = {
+        "Algorithm": [algorithm],
+        "Average Waiting Time": [avg_wt],
+        "Average Turnaround Time": [avg_tat]
+    }
+
+    df = pd.DataFrame(data)
+
+    st.table(df)
 
     fig = go.Figure()
 

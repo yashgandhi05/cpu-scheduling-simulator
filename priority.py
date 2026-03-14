@@ -4,7 +4,6 @@ def priority_scheduling(processes):
 
     time = 0
     gantt = []
-
     waiting = []
     turnaround = []
 

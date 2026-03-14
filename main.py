@@ -1,4 +1,5 @@
 import streamlit as st
+from fcfs import fcfs
 
 st.title("CPU Scheduling Simulator")
 
